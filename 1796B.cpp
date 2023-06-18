@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+#include <chrono>
+#include <random>
+#include <iomanip>
+#include <fstream>
+
+using namespace std;
+
+/* ************************************************************************************************************************************ */
+typedef long long ll;
+typedef long double ld;
+#define forn(i, e) for (ll i = 0; i < e; i++)
+#define forsn(i, s, e) for (ll i = s; i < e; i++)
+#define rforn(i, s) for (ll i = s; i >= 0; i--)
+#define rforsn(i, s, e) for (ll i = s; i >= e; i--)
+#define endl "\n"
+#define ya cout << "YES" << endl;
+#define na cout << "NO" << endl;
+#define all(x) (x).begin(), (x).end()
+#define sz(x) ((ll)(x).size())
+#define int long long
+int mod = 1000000007;
+
+/* ************************************************************************************************************************************* */
+/* CODE BEGINS HERE */
+
+void solv()
+{
+    string s1, s2;
+    cin >> s1 >> s2;
+    int n1 = s1.size();
+    int n2 = s2.size();
+    forn(i, n1)
+    {
+        forn(j, n2)
+        {
+            if (s1[i] == s2[j])
+            {
+                if (i == n1 - 1 && j == n2 - 1)
+                {
+                    ya;
+                    cout << "*" << s1[i] << endl;
+                    return;
+                }
+                else if (i == 0 and j == 0)
+                {
+                    ya;
+                    cout << s1[i] << "*" << endl;
+                    return;
+                }
+                else if (s1[i + 1] == s2[j + 1])
+                {
+                    ya;
+                    cout << "*" << s1[i] << s1[i + 1] << "*" << endl;
+                    return;
+                }
+            }
+        }
+    }
+    na;
+}
+int32_t main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        solv();
+    }
+}
