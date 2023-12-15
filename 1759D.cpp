@@ -62,54 +62,44 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+int lm(int x, int y)
+{
+    int val = x * y;
+    if (val < 0)
+    {
+        y = LONG_LONG_MAX / x;
+        val = y * x;
+    }
+    val /= __gcd(x, y);
+    val /= y;
+    return val;
+}
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    vector<int> tens(18);
+    tens[0] = 10;
+    for (int i = 1; i < 18; i++)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        tens[i] = 10 * tens[i - 1];
+    }
+    int n, m;
+    cin >> n >> m;
+    vector<int> poss(19);
+    poss[0] = m;
+    for (int i = 0; i < 18; i++)
+    {
+        poss[i + 1] = lm(tens[i], n);
+    }
+    int ans = -1;
+    for (int i = 0; i < 19; i++)
+    {
+        if (poss[i] <= m)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            ans = n * poss[i];
         }
     }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+
+    cout << ans * ((n * m) / ans) << endl;
 }
 int32_t main()
 {

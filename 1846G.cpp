@@ -62,54 +62,77 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+int val(string s)
+{
+    int ans = 0, mult = 1;
+    reverse(all(s));
+    forn(i, sz(s))
+    {
+        ans += mult * (s[i] - '0');
+        mult *= 2;
+    }
+    return ans;
+}
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int n, l;
+    cin >> l >> n;
+    vector<int> da(n), se(n), cu(n);
+    vector<pair<int, int>> so(n);
+    string s;
+    cin >> s;
+    int ab = val(s);
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        cin >> da[i];
+        string s1, s2;
+        cin >> s1 >> s2;
+        se[i] = val(s2);
+        cu[i] = val(s1);
     }
-    if (su % 4 != 0)
+    forn(i, n)
+    {
+        so[i].first = se[i];
+        so[i].second = cu[i];
+    }
+    sort(all(so), greater<pair<int, int>>());
+    if (so.back().first != 0)
     {
         cout << -1 << endl;
+        return;
     }
-    else
+    forn(i, n)
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        se[i] = so[i].first;
+        cu[i] = so[i].second;
     }
+    vector<vector<int>> dp(n, vector<int>(pow(2, l), LONG_LONG_MAX));
+    forn(i, n)
+    {
+        int ind = (((ab | cu[i]) ^ cu[i]) | se[i]);
+        // cout << ind << endl;
+        dp[i][ind] = min(dp[i][ind], da[i]);
+        forn(j, sz(dp[i]))
+        {
+            if (i > 0)
+            {
+                dp[i][j] = min(dp[i - 1][j], dp[i][j]);
+                if (dp[i - 1][j] != LONG_LONG_MAX)
+                {
+                    int ind1 = (((j | cu[i]) ^ cu[i]) | se[i]);
+                    // cout << ind1 << " ";
+                    dp[i][ind1] = min(dp[i][ind1], dp[i - 1][j] + da[i]);
+                }
+            }
+        }
+        // cout << endl;
+    }
+    int mi = LONG_LONG_MAX;
+    forn(i, n)
+    {
+        mi = min(dp[i][0], mi);
+    }
+    cout << mi << endl;
 }
 int32_t main()
 {

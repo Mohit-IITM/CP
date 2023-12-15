@@ -64,51 +64,27 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    int a, b, c;
+    cin >> a >> b >> c;
+    int g = __gcd(a, b);
+    a /= g;
+    b /= g;
+    if (c % g != 0)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        cout << "No" << endl;
+        return;
     }
-    if (su % 4 != 0)
+    c /= g;
+    int x = c * modInverse(a, b);
+    x %= b;
+    c -= a * x;
+    if (c < 0 || c % b)
     {
-        cout << -1 << endl;
+        cout << "No" << endl;
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        cout << "Yes" << endl;
     }
 }
 int32_t main()
@@ -116,8 +92,7 @@ int32_t main()
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
+    int t = 1;
     while (t--)
     {
         solv();

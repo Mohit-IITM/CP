@@ -66,50 +66,50 @@ void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int ma = 0;
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        forn(j, n)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            int cost = 0;
+            int mapro = (i + 1) * (j + 1);
+            vector<bool> fil(n, false);
+            fil[j] = true;
+            bool c1 = true;
+            for (int k = n; k > 0; k--)
+            {
+                if (k != i + 1)
+                {
+                    int bespos = min(mapro / k, n);
+                    for (int l = bespos; l > 0; l--)
+                    {
+                        if (!fil[l - 1])
+                        {
+                            if (l * k > mapro)
+                            {
+                                c1 = false;
+                            }
+                            cost += l * k;
+                            fil[l - 1] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            forn(_, n)
+            {
+                if (!fil[_])
+                {
+                    c1 = false;
+                }
+            }
+            if (c1)
+            {
+                ma = max(ma, cost);
+            }
         }
     }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    cout << ma << endl;
 }
 int32_t main()
 {

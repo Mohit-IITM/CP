@@ -58,6 +58,18 @@ vector<bool> sieve(int n)
     }
     return is_prime;
 }
+int binpow(int a, int x)
+{
+    int res = binpow(a, x / 2);
+    if (x % 2)
+    {
+        return res * res * a;
+    }
+    else
+    {
+        return res * res;
+    }
+}
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
@@ -66,50 +78,30 @@ void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    vector<int> ans;
+    ans.push_back(n);
+    while (n > 1)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        int temp = 1, tn = n;
+        while (tn % 2 == 0)
         {
-            p1++;
+            tn /= 2;
+            temp *= 2;
+            if (temp == n)
+            {
+                temp /= 2;
+                break;
+            }
         }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        n -= temp;
+        ans.push_back(n);
     }
-    if (su % 4 != 0)
+    cout << sz(ans) << endl;
+    for (auto x : ans)
     {
-        cout << -1 << endl;
+        cout << x << " ";
     }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    cout << endl;
 }
 int32_t main()
 {

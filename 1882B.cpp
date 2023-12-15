@@ -66,50 +66,46 @@ void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    vector<map<int, int>> fils(n);
+    map<int, int> whole;
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        int m;
+        cin >> m;
+        forn(j, m)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            int x;
+            cin >> x;
+            fils[i][x]++;
+            whole[x]++;
         }
     }
-    if (su % 4 != 0)
+    int ma = 0;
+    for (auto x : whole)
     {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        int num = x.first;
+        map<int, int> whole1 = whole;
+        for (auto y : fils)
         {
-            p1 -= 2;
-            ans += 2;
+            if (y[num] > 0)
+            {
+                for (auto z : y)
+                {
+                    whole1[z.first] -= z.second;
+                }
+            }
         }
-        if (p1 != 0)
+        int tma = 0;
+        for (auto x : whole1)
         {
-            ans += (p1 / 4) * 3;
+            if (x.second > 0)
+            {
+                tma++;
+            }
         }
-        cout << ans << endl;
+        ma = max(ma, tma);
     }
+    cout << ma << endl;
 }
 int32_t main()
 {

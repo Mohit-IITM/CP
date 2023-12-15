@@ -13,7 +13,7 @@ typedef long double ld;
 #define forsn(i, s, e) for (ll i = s; i < e; i++)
 #define rforn(i, s) for (ll i = s; i >= 0; i--)
 #define rforsn(i, s, e) for (ll i = s; i >= e; i--)
-#define endl "\n"
+// #define endl "\n"
 #define ya cout << "YES" << endl;
 #define na cout << "NO" << endl;
 #define all(x) (x).begin(), (x).end()
@@ -64,51 +64,43 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    int n, k;
+    cin >> n >> k;
+    int ans = 0;
+    if (n % k)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        int st0 = 1;
+        forn(i, n / k - 1)
         {
-            p1++;
+            cout << "? " << st0 << endl;
+            int x;
+            cin >> x;
+            ans ^= x;
+            st0 += k;
         }
-        if (a[i] % 4 == 2)
+        int st = n - n % k - k, step = (n % k) / 2;
+        forn(i, 3)
         {
-            p2++;
+            cout << "? " << st + 1 << endl;
+            int x;
+            cin >> x;
+            ans ^= x;
+            st += step;
         }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
-    }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
+        cout << "! " << ans << endl;
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        int st = 1;
+        forn(i, n / k)
         {
-            p1 -= 2;
-            ans += 2;
+            cout << "? " << st << endl;
+            int x;
+            cin >> x;
+            ans ^= x;
+            st += k;
         }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        cout << "! " << ans << endl;
     }
 }
 int32_t main()

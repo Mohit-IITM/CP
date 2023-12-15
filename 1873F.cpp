@@ -61,54 +61,44 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
+vector<int> a;
+int mal(int l, int r, int k)
+{
+    if (l > r)
+    {
+        return 0;
+    }
+    int male = 0;
+    int end = l;
+    int sum = 0;
+    for (int start = l; start < r; ++start)
+    {
+        while (end < r && sum + a[end] <= k)
+        {
+            sum += a[end];
+            end += 1;
+        }
+        /* Do something with start, end, sum */
+        male = max(end - start + 1, male);
+        sum -= a[start];
+    }
+    return male;
+}
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int n, k;
+    cin >> n >> k;
+    a.resize(n);
+    vector<int> h(n);
+    vector<int> end(n, -1);
+    forn(i, n)
+    {
+        cin >> h[i];
+    }
     forn(i, n)
     {
         cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
-    }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
     }
 }
 int32_t main()

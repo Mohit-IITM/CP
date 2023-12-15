@@ -67,57 +67,80 @@ void solv()
     int n;
     cin >> n;
     vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    vector<bool> red(n, false);
     forn(i, n)
     {
         cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
     }
-    if (su % 4 != 0)
+    vector<int> modf;
+    int ind = 0, cur = -1;
+    if (a[0] == 2)
     {
-        cout << -1 << endl;
+        a[0]--;
     }
-    else
+    if (a[n - 1] == 2)
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        a[n - 1]--;
     }
+    while (ind < n)
+    {
+        if (a[ind] == 0)
+        {
+            if (cur != -1)
+            {
+                modf.push_back(cur);
+                cur = -1;
+            }
+            modf.push_back(0);
+        }
+        else
+        {
+            cur = max(cur, a[ind]);
+        }
+        ind++;
+    }
+    if (cur != -1)
+    {
+        modf.push_back(cur);
+    }
+    // for (auto x : modf)
+    // {
+    //     cout << x << " ";
+    // }
+    int ans = sz(modf);
+    forn(i, sz(modf))
+    {
+        bool c1 = false;
+        if (modf[i] == 0)
+        {
+            if (i != 0)
+            {
+                if (modf[i - 1] == 2)
+                {
+                    c1 = true;
+                }
+            }
+            if (i != n - 1)
+            {
+                if (modf[i + 1] == 2)
+                {
+                    c1 = true;
+                }
+            }
+            if (c1)
+            {
+                ans--;
+            }
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
+    int t = 1; // cin>>t;
     while (t--)
     {
         solv();

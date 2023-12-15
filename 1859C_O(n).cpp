@@ -66,50 +66,19 @@ void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    int su1 = (n * (n + 1) * (n + 2)) / 6, su2 = (n * (n + 1)) / 2;
+    int ma = 0;
+    forn(k, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        int tsu1 = (k * (k + 1) * (2 * k + 1)) / 6, tsu2 = (k * (k + 1) * (k + 2)) / 6, tsu3 = (k * (k + 1)) / 2;
+        int tsu = k * (su2 - tsu3);
+        int tsu4 = tsu3 * (n - k);
+        int tma = tsu1 + tsu - tsu2 + su1 - tsu4;
+        int dif = ((k + n + 1) / 2) * ((k + n + 2) / 2);
+        tma -= dif;
+        ma = max(ma, tma);
     }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    cout << ma << endl;
 }
 int32_t main()
 {

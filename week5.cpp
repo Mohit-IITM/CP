@@ -62,54 +62,74 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+const int INF = 1000000000;
+
+struct Edge
+{
+    int w = INF, to = -1;
+    bool operator<(Edge const &other) const
+    {
+        return make_pair(w, to) < make_pair(other.w, other.to);
+    }
+};
+
+int n;
+vector<vector<Edge>> adj;
+
+void prim()
+{
+    int total_weight = 0;
+    vector<Edge> min_e(n);
+    min_e[0].w = 0;
+    set<Edge> q;
+    q.insert({0, 0});
+    vector<bool> selected(n, false);
+    for (int i = 0; i < n; ++i)
+    {
+        if (q.empty())
+        {
+            cout << "No MST!" << endl;
+            return;
+        }
+
+        int v = q.begin()->to;
+        selected[v] = true;
+        total_weight += q.begin()->w;
+        q.erase(q.begin());
+        // if (min_e[v].to != -1)
+        //     cout << v << " " << min_e[v].to << endl;
+
+        for (Edge e : adj[v])
+        {
+            if (!selected[e.to] && e.w < min_e[e.to].w)
+            {
+                q.erase({min_e[e.to].w, e.to});
+                min_e[e.to] = {e.w, v};
+                q.insert({e.w, e.to});
+            }
+        }
+    }
+    cout << total_weight << endl;
+}
+
 void solv()
 {
-    int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    adj.resize(n);
+    forn(i, n - 1)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        int x, y, W;
+        cin >> x >> y >> W;
+        x--;
+        y--;
+        Edge temp;
+        temp.to = y;
+        temp.w = W;
+        adj[x].push_back(temp);
+        temp.to = x;
+        adj[y].push_back(temp);
     }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    prim();
 }
 int32_t main()
 {

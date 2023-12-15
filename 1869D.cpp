@@ -67,48 +67,90 @@ void solv()
     int n;
     cin >> n;
     vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int su = 0;
+    bool poss = true;
+    set<int> po2;
+    int el = 1;
+    po2.insert(0);
+    forn(i, 35)
+    {
+        po2.insert(el);
+        el *= 2;
+    }
     forn(i, n)
     {
         cin >> a[i];
         su += a[i];
-        if (a[i] % 4 == 1)
+    }
+    if (su % n)
+    {
+        poss = false;
+    }
+    int avg = su / n;
+    int le = 0, mo = 0;
+    vector<int> plus(34, 0), minus(34, 0);
+    forn(i, n)
+    {
+        int val = abs(a[i] - avg);
+        if (a[i] < avg)
         {
-            p1++;
+            le++;
         }
-        if (a[i] % 4 == 2)
+        else if (a[i] > avg)
         {
-            p2++;
+            mo++;
         }
-        if (a[i] % 4 == 3)
+        // cout << val << " ";
+        if (po2.find(val) == po2.end())
         {
-            p3++;
+            poss = false;
+        }
+        if (a[i] > avg)
+        {
+            plus[log2(val)]++;
+        }
+        else if (a[i] < avg)
+        {
+            minus[log2(val)]++;
         }
     }
-    if (su % 4 != 0)
+    // cout << endl;
+    if (poss)
     {
-        cout << -1 << endl;
+        forn(i, 34)
+        {
+            plus[i] -= minus[i];
+            cout << plus[i] << " ";
+        }
+        cout << endl;
+        for (int i = 33; i > 0; i--)
+        {
+            if (plus[i] > 0)
+            {
+                plus[i - 1] += 2 * plus[i];
+                plus[i] = 0;
+            }
+        }
+        forn(i, 34)
+        {
+            if (plus[i] != 0)
+            {
+                poss = false;
+            }
+        }
+        // cout << endl;
+        if (poss)
+        {
+            ya;
+        }
+        else
+        {
+            na;
+        }
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        na;
     }
 }
 int32_t main()

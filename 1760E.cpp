@@ -22,18 +22,27 @@ typedef long double ld;
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-int_fast32_t calc(int d[], int n)
+int inv(vector<int> a, int i, int n)
 {
-    int n1 = 0, ans = 0;
+    int ans = 0;
+    if (i != -1)
+    {
+        a[i] = 1 - a[i];
+    }
+    vector<int> b(n);
+    if (a[i] == 0)
+    {
+        b[i] = 0;
+    }
+    forsn(i, 1, n)
+    {
+        b[i] = 1 - a[i] + b[i - 1];
+    }
     forn(i, n)
     {
-        if (d[i] == 0)
+        if (a[i] == 1)
         {
-            ans += n1;
-        }
-        if (d[i] == 1)
-        {
-            n1++;
+            ans += b[n - 1] - b[i];
         }
     }
     return ans;
@@ -42,41 +51,32 @@ void solv()
 {
     int n;
     cin >> n;
-    int a[n], b[n], c[n];
+    vector<int> a(n), b(n, 0), c(n);
     forn(i, n)
     {
         cin >> a[i];
-        b[i] = a[i];
-        c[i] = a[i];
     }
+    int ind1 = n - 1, ind2 = 0;
     forn(i, n)
     {
         if (a[i] == 0)
         {
-            c[i] = 1;
+            ind1 = i;
             break;
         }
     }
-    rforn(i, n - 1)
+    for (int i = n - 1; i >= 0; i--)
     {
         if (a[i] == 1)
         {
-            b[i] = 0;
+            ind2 = i;
             break;
         }
     }
-    // forn(i, n)
-    // {
-    //     cout << b[i] << " ";
-    // }
-    // cout << endl;
-    // forn(i, n)
-    // {
-    //     cout << c[i] << " ";
-    // }
-    // cout << endl;
-    // cout << calc(c, n) << " " << calc(b, n) << endl;
-    cout << max(calc(c, n), calc(b, n)) << endl;
+    int t1 = inv(a, -1, n);
+    int t2 = inv(a, ind1, n);
+    int t3 = inv(a, ind2, n);
+    cout << max(t1, max(t2, t3)) << endl;
 }
 int32_t main()
 {

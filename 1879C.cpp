@@ -20,6 +20,7 @@ typedef long double ld;
 #define sz(x) ((ll)(x).size())
 #define int long long
 int mod = 1000000007;
+int MOD = 998244353;
 int modInverse(int A, int M)
 {
     int m0 = M;
@@ -64,52 +65,35 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    string s;
+    cin >> s;
+    int n = sz(s);
+    vector<int> fac(n + 1);
+    fac[0] = 1;
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        fac[i + 1] = fac[i] * (i + 1);
+        fac[i + 1] %= MOD;
     }
-    if (su % 4 != 0)
+    int ans = 1, tl = 1, ste = 0;
+    forsn(i, 1, n)
     {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        if (s[i] == s[i - 1])
         {
-            p1 -= 2;
-            ans += 2;
+            tl++;
         }
-        if (p1 != 0)
+        else
         {
-            ans += (p1 / 4) * 3;
+            ste += tl - 1;
+            ans *= fac[tl];
+            ans %= MOD;
+            tl = 1;
         }
-        cout << ans << endl;
     }
+    ans *= fac[tl];
+    ste += tl - 1;
+    ans %= MOD;
+    cout << ste << " " << ans << endl;
 }
 int32_t main()
 {

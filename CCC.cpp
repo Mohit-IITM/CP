@@ -64,51 +64,95 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    int n, m;
+    cin >> n >> m;
+    int x, k;
+    cin >> x >> k;
+    vector<int> a(n + m), b(n + m);
+    int ma = 0;
+    forn(i, m + n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        cin >> b[i];
+        ma = max(ma, b[i]);
     }
-    if (su % 4 != 0)
+    if (n == 0 && m == 0)
     {
         cout << -1 << endl;
+        return;
+    }
+    if (n == 0)
+    {
+        cout << "Shaun" << endl;
+        return;
+    }
+    if (m == 0)
+    {
+        cout << "Chahel" << endl;
+        return;
+    }
+    // cout << ma << endl;
+    a[0] = x % k;
+    for (int i = 1; i < (n + m); i++)
+    {
+        a[i] = a[i - 1] * x;
+        a[i] %= k;
+        // cout << a[i] << " ";
+    }
+    // cout << endl;
+    forn(i, n + m)
+    {
+        a[i] += 1;
+    }
+    vector<bool> prime(ma + 2);
+    prime = sieve(ma + 1);
+    int shaun = m, chahel = n;
+    bool s = false, c = false;
+    forn(i, n + m)
+    {
+        int val = ((b[i] - 1) / a[i]) + 1;
+        // cout << val << " ";
+        if (prime[val])
+        {
+            shaun--;
+        }
+        else
+        {
+            chahel--;
+        }
+        if (chahel <= 0)
+        {
+            c = true;
+            break;
+        }
+        else if (shaun <= 0)
+        {
+            s = true;
+            break;
+        }
+    }
+    // cout << endl;
+    if (s)
+    {
+        cout << "Chahel" << endl;
+    }
+    else if (c)
+    {
+        cout << "Shaun" << endl;
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        if (shaun < chahel)
         {
-            p1 -= 2;
-            ans += 2;
+            cout << "Chahel" << endl;
         }
-        if (p1 != 0)
+        else if (chahel < shaun)
         {
-            ans += (p1 / 4) * 3;
+            cout << "Shaun" << endl;
         }
-        cout << ans << endl;
+        else
+        {
+            cout << -1 << endl;
+        }
     }
 }
 int32_t main()

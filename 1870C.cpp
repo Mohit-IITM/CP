@@ -64,52 +64,46 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int n, k;
+    cin >> n >> k;
+    vector<pair<int, int>> a(n);
+    vector<bool> vis(k, false);
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        cin >> a[i].first;
+        vis[a[i].first - 1] = true;
+        a[i].second = i;
     }
-    if (su % 4 != 0)
+    vector<int> l(k, n), r(k, -1);
+    sort(all(a), greater<pair<int, int>>());
+    forn(i, n)
     {
-        cout << -1 << endl;
+        int el = a[i].first - 1;
+        int ind = a[i].second;
+        l[el] = min(l[el], ind);
+        r[el] = max(r[el], ind);
     }
-    else
+    for (int i = k - 2; i >= 0; i--)
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        l[i] = min(l[i], l[i + 1]);
+        r[i] = max(r[i], r[i + 1]);
     }
+    // forn(i, k)
+    // {
+    //     cout << l[i] << " " << r[i] << endl;
+    // }
+    forn(i, k)
+    {
+        if (!vis[i])
+        {
+            cout << 0 << " ";
+        }
+        else
+        {
+            cout << 2 * (r[i] - l[i] + 1) << " ";
+        }
+    }
+    cout << endl;
 }
 int32_t main()
 {

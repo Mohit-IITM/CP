@@ -1,21 +1,21 @@
-#include <bits/stdc++.h>
+#include <bits/stdc++.h>  
 #include <chrono>
 #include <random>
 #include <iomanip>
 #include <fstream>
-
+ 
 using namespace std;
-
+ 
 /* ************************************************************************************************************************************ */
 typedef long long ll;
 typedef long double ld;
-#define forn(i, e) for (ll i = 0; i < e; i++)
-#define forsn(i, s, e) for (ll i = s; i < e; i++)
-#define rforn(i, s) for (ll i = s; i >= 0; i--)
-#define rforsn(i, s, e) for (ll i = s; i >= e; i--)
+#define forn(i,e) for(ll i = 0; i < e; i++)
+#define forsn(i,s,e) for(ll i = s; i < e; i++)
+#define rforn(i,s) for(ll i = s; i >= 0; i--)
+#define rforsn(i,s,e) for(ll i = s; i >= e; i--)
 #define endl "\n"
-#define ya cout << "YES" << endl;
-#define na cout << "NO" << endl;
+#define ya cout<<"YES"<<endl;
+#define na cout<<"NO"<<endl;
 #define all(x) (x).begin(), (x).end()
 #define sz(x) ((ll)(x).size())
 #define int long long
@@ -58,68 +58,33 @@ vector<bool> sieve(int n)
     }
     return is_prime;
 }
-
+ 
+ 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
+ 
+
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
-    {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+    int n,k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    vector<int> l(k),r(k);
+    forn(i,k){
+        cin>>l[i];
     }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
+    forn(i,k){
+        cin>>r[i];
     }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        solv();
-    }
+    int t;cin>>t;
+    while(t--){solv();}
 }

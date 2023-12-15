@@ -64,60 +64,44 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> a(n, vector<int>(m));
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        forn(j, m)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            cin >> a[i][j];
         }
     }
-    if (su % 4 != 0)
+    vector<int> min1(n, LONG_LONG_MAX), min2(m, LONG_LONG_MAX);
+    forn(i, n)
     {
-        cout << -1 << endl;
+        forn(j, m)
+        {
+            min1[i] = min(min1[i], a[i][j]);
+            min2[j] = min(min2[j], a[i][j]);
+        }
     }
-    else
+    int count = 0;
+    forn(i, n)
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        forn(j, m)
         {
-            p1 -= 2;
-            ans += 2;
+            if (a[i][j] == min1[i] && a[i][j] == min2[j])
+            {
+                count++;
+            }
         }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
     }
+    cout << count << endl;
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
+    int t = 1;
     while (t--)
     {
         solv();

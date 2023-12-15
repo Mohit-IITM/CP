@@ -64,51 +64,37 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    int m, k, a1, ak;
+    cin >> m >> k >> a1 >> ak;
+    int vk = k * ak;
+    if (m > vk)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
-    }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
+        m -= vk;
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        m %= k;
+    }
+    if (m <= a1)
+    {
+        cout << 0 << endl;
+    }
+    else
+    {
+        int ans1 = (m - a1) / k + (m - a1) % k;
+        int ans2;
+        if (a1 > m % k)
         {
-            p1 -= 2;
-            ans += 2;
+            a1 -= m % k;
+            m -= m % k;
+            m -= k * (a1 / k);
+            ans2 = m / k + m % k;
         }
-        if (p1 != 0)
+        else
         {
-            ans += (p1 / 4) * 3;
+            ans2 = LONG_LONG_MAX;
         }
-        cout << ans << endl;
+        cout << min(ans1, ans2) << endl;
     }
 }
 int32_t main()

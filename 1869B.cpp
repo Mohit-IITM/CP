@@ -64,52 +64,27 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int n, k, a, b;
+    cin >> n >> k >> a >> b;
+    a--;
+    b--;
+    vector<int> x(n), y(n);
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        cin >> x[i] >> y[i];
     }
-    if (su % 4 != 0)
+    int x1 = x[a], y1 = y[a], x2 = x[b], y2 = y[b];
+    int mia = 1e11, mib = 1e11;
+    int df = abs(x1 - x2) + abs(y1 - y2);
+    forn(i, k)
     {
-        cout << -1 << endl;
+        int da = abs(x[i] - x1) + abs(y[i] - y1);
+        int db = abs(x[i] - x2) + abs(y[i] - y2);
+        mia = min(mia, da);
+        mib = min(mib, db);
     }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    df = min(df, mia + mib);
+    cout << df << endl;
 }
 int32_t main()
 {

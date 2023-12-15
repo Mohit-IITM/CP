@@ -64,51 +64,43 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int n, m;
+    cin >> n >> m;
+    string s;
+    cin >> s;
+    vector<int> ed(n, -1);
+    int ind = 1, pos = 0;
+    while (ind < n)
+    {
+        while (s[ind] >= s[ind - 1])
+        {
+            ind++;
+        }
+        ed[pos] = ind - 1;
+        pos = ind;
+        ind++;
+    }
+    cout << endl;
+    vector<int> l(m), r(m);
+    forn(i, m)
+    {
+        cin >> l[i] >> r[i];
+        l[i]--;
+        r[i]--;
+    }
+    int pre = ed[0];
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        if (ed[i] == -1)
         {
-            p1++;
+            ed[i] = max(pre, i);
         }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        pre = ed[i];
     }
-    if (su % 4 != 0)
+    cout << endl;
+    forn(i, n)
     {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        cout << ed[i] << " ";
     }
 }
 int32_t main()

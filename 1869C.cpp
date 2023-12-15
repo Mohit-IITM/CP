@@ -64,51 +64,72 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    int n, m;
+    cin >> n >> m;
+    if (m == 1)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        forn(i, n + 1)
         {
-            p1++;
+            cout << 0 << endl;
         }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        return;
     }
-    if (su % 4 != 0)
+    int val = min(m, n + 1);
+    cout << val << endl;
+    if (n >= m)
     {
-        cout << -1 << endl;
+        forn(i, n - val)
+        {
+            forn(j, m)
+            {
+                cout << j << " ";
+            }
+            cout << endl;
+        }
+        forn(i, min(n, 2LL))
+        {
+            forn(j, m)
+            {
+                cout << j << " ";
+            }
+            cout << endl;
+        }
+        int el = 2;
+        forn(i, val - 2)
+        {
+            forn(j, min(val, m))
+            {
+                cout << (j + el) % val << " ";
+            }
+            forn(j, m - val)
+            {
+                cout << val + j << " ";
+            }
+            cout << endl;
+            el++;
+        }
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        forn(i, m)
         {
-            p1 -= 2;
-            ans += 2;
+            cout << i << " ";
         }
-        if (p1 != 0)
+        cout << endl;
+        int el = 2;
+        forn(i, n - 1)
         {
-            ans += (p1 / 4) * 3;
+            forn(j, n + 1)
+            {
+                cout << (j + el) % (n + 1) << " ";
+            }
+            forn(j, m - n - 1)
+            {
+                cout << j + n + 1 << " ";
+            }
+            cout << endl;
+            el++;
         }
-        cout << ans << endl;
     }
 }
 int32_t main()

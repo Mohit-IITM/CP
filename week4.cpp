@@ -61,54 +61,71 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
+vector<int> a;
 void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    a.resize(n, 0);
+    vector<bool> vis(n, false);
+    vector<set<int>> adj(n);
+    forn(i, n - 1)
+    {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        adj[x].insert(y);
+        adj[y].insert(x);
+    }
+    adj[0].insert(-1);
+    queue<int> wow;
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        if (sz(adj[i]) == 1)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            vis[i] = true;
+            a[i]++;
+            wow.push(i);
         }
     }
-    if (su % 4 != 0)
+    while (!wow.empty())
     {
-        cout << -1 << endl;
+        int node = wow.front();
+        wow.pop();
+        for (auto x : adj[node])
+        {
+            if (x == -1)
+            {
+                continue;
+            }
+            if (!vis[x])
+            {
+                vis[x] = true;
+                adj[x].erase(node);
+                a[x] += a[node];
+            }
+            if (sz(adj[x]) == 1)
+            {
+                if (a[x] == 1)
+                {
+                    a[x] = 0;
+                }
+                else
+                {
+                    a[x] = 1;
+                }
+                wow.push(x);
+            }
+        }
+    }
+    if (a[0])
+    {
+        cout << "Alice" << endl;
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        cout << "Bob" << endl;
     }
 }
 int32_t main()
@@ -116,8 +133,7 @@ int32_t main()
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
+    int t = 1;
     while (t--)
     {
         solv();

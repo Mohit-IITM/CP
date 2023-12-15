@@ -66,50 +66,69 @@ void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    vector<string> mat0(n);
+    vector<vector<int>> l(n, vector<int>(n, 0)), mat(n, vector<int>(n)), r(n, vector<int>(n + 1, 0));
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        cin >> mat0[i];
     }
-    if (su % 4 != 0)
+    forn(i, n)
     {
-        cout << -1 << endl;
+        forn(j, n)
+        {
+            mat[i][j] = mat0[i][j] - '0';
+        }
     }
-    else
+    int ans = 0;
+    forn(j, n)
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        if (mat[0][j])
         {
-            p1 -= 2;
-            ans += 2;
+            ans++;
+            int le = max(j - 1, 0LL), re = min(j + 2, n);
+            l[0][le]++;
+            r[0][re]++;
         }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
     }
+    for (int i = 1; i < n; i++)
+    {
+        bool inv = false;
+        forn(j, n)
+        {
+            if (l[i - 1][j] % 2)
+            {
+                int le = max(j - 1, 0LL);
+                l[i][le]++;
+            }
+            if (r[i - 1][j] % 2)
+            {
+                int re = min(j + 1, n);
+                r[i][re]++;
+            }
+        }
+        forn(j, n)
+        {
+            if ((l[i - 1][j] + r[i - 1][j]) % 2)
+            {
+                inv = !inv;
+            }
+            if (inv)
+            {
+                mat[i][j] ^= 1;
+            }
+        }
+        forn(j, n)
+        {
+            if (mat[i][j])
+            {
+                ans++;
+                int le = max(j - 1, 0LL), re = min(j + 2, n);
+                l[i][le]++;
+                r[i][re]++;
+            }
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

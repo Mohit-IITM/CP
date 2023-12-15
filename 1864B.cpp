@@ -20,61 +20,91 @@ typedef long double ld;
 #define sz(x) ((ll)(x).size())
 #define int long long
 int mod = 1000000007;
+int modInverse(int A, int M)
+{
+    int m0 = M;
+    int y = 0, x = 1;
+    if (M == 1)
+        return 0;
+    while (A > 1)
+    {
+        int q = A / M;
+        int t = M;
+        M = A % M, A = t;
+        t = y;
+        y = x - q * y;
+        x = t;
+    }
+    if (x < 0)
+    {
+        x += m0;
+    }
+    return x;
+}
+vector<bool> sieve(int n)
+{
+    // Time Complexity:- O(log(log(n)))
+    vector<bool> is_prime(n + 1, 1);
+    is_prime[0] = is_prime[1] = 0;
+    for (int i = 2; i <= n; i++)
+    {
+        if (is_prime[i] && 1LL * i * i <= n)
+        {
+            for (int j = i * i; j <= n; j += i)
+            {
+                is_prime[j] = 0;
+            }
+        }
+    }
+    return is_prime;
+}
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
+
 void solv()
 {
     int n, k;
     cin >> n >> k;
-    vector<int> a(n);
+    string s;
+    cin >> s;
+    string s1 = "", s2 = "";
     forn(i, n)
     {
-        cin >> a[i];
-    }
-    vector<vector<int>> dp(n, vector<int>(64, 0));
-    dp[0][a[0]]++;
-    forsn(i, 1, n)
-    {
-        dp[i] = dp[i - 1];
-        dp[i][a[i]]++;
-        forn(j, 64)
+        if (i % 2)
         {
-            if (dp[i - 1][j])
-            {
-                dp[i][j & a[i]] += dp[i - 1][j];
-            }
-            dp[i][j] %= mod;
+            s1 += s[i];
+        }
+        else
+        {
+            s2 += s[i];
         }
     }
-    vector<int> bits(64, 0);
-    forn(i, 64)
+    sort(all(s1));
+    sort(all(s2));
+    string s3 = "";
+    forn(i, n)
     {
-        int num = i;
-        while (num > 0)
+        if (i % 2)
         {
-            if (num % 2 == 1)
-            {
-                bits[i]++;
-            }
-            num /= 2;
+            s3 += s1[i / 2];
+        }
+        else
+        {
+            s3 += s2[i / 2];
         }
     }
-    int ans = 0;
-    forn(j, 64)
+    if (k % 2 == 0)
     {
-        if (bits[j] == k)
-        {
-            ans += dp[n - 1][j];
-            ans %= mod;
-        }
+        sort(all(s3));
     }
-    cout << ans << endl;
+    cout << s3 << endl;
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    cout.tie(0);
     int t;
     cin >> t;
     while (t--)

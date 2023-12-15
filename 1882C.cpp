@@ -67,49 +67,39 @@ void solv()
     int n;
     cin >> n;
     vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    int ans = 0;
+    int moi = n;
     forn(i, n)
     {
         cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        if ((i % 2 == 0) && a[i] > -1)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            moi = min(moi, i);
         }
     }
-    if (su % 4 != 0)
+    for (int i = moi; i < n; i++)
     {
-        cout << -1 << endl;
+        if (a[i] > 0)
+        {
+            ans += a[i];
+        }
     }
-    else
+    int su = 0, man = -2 * 1e9, mip = 2 * 1e9;
+    forn(i, moi)
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        if (a[i] > 0)
         {
-            p1 -= 2;
-            ans += 2;
+            mip = min(a[i], mip);
+            su += a[i];
         }
-        if (p1 != 0)
+        else
         {
-            ans += (p1 / 4) * 3;
+            man = max(man, a[i]);
         }
-        cout << ans << endl;
     }
+    int suf = max(su - mip, su + man);
+    suf = max(suf, 0LL);
+    cout << ans + suf << endl;
 }
 int32_t main()
 {

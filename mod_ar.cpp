@@ -58,58 +58,34 @@ vector<bool> sieve(int n)
     }
     return is_prime;
 }
-
+vector<int> fac;
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
+int C(int n, int r)
+{
+    if (r > n)
+    {
+        return 0;
+    }
+    int a = fac[n];
+    a *= modInverse(fac[r], mod);
+    a %= mod;
+    a *= modInverse(fac[n - r], mod);
+    a %= mod;
+    return a;
+}
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
-    {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
-    }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    int n, k;
+    cin >> n >> k;
+    int ans = 1;
+    ans *= n;
+    ans %= mod;
+    ans *= n - 1;
+    ans %= mod;
+    ans *= pow(2, k - 1);
+    ans %= mod;
+    cout << ans << endl;
 }
 int32_t main()
 {
@@ -118,6 +94,11 @@ int32_t main()
     cout.tie(0);
     int t;
     cin >> t;
+    fac.push_back(1);
+    forn(i, 1e6)
+    {
+        fac.push_back((fac.back() * (i + 1)) % mod);
+    }
     while (t--)
     {
         solv();

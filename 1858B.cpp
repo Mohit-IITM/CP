@@ -64,51 +64,34 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    int n, m, d;
+    cin >> n >> m >> d;
+    vector<int> bench(m);
+    forn(i, m)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
+        cin >> bench[i];
     }
-    if (su % 4 != 0)
+    int cookies = m;
+    cookies += (bench[0]) / d;
+    for (int i = 1; i < m; i++)
     {
-        cout << -1 << endl;
+        cookies += (bench[i] - bench[i - 1] - 1) / d;
     }
-    else
+    cookies += (n - bench[m - 1]) / d;
+    map<int, int> counts;
+    int val = (bench[1] - bench[0]) / d + (bench[0]) / d - (bench[1]) / d;
+    counts[cookies - val]++;
+    for (int i = 1; i < m - 1; i++)
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
+        val = (bench[i + 1] - bench[i] - 1) / d + (bench[i] - bench[i - 1] - 1) / d - (bench[i + 1] - bench[i - 1] - 1) / d;
+        counts[cookies - val]++;
+    }
+    val = (n - bench[m - 1]) / d + (bench[m - 1] - bench[m - 2]) / d - (n - bench[m - 2]) / d;
+    counts[cookies - val]++;
+    cout << cookies << endl;
+    for (auto x : counts)
+    {
+        cout << x.first << " " << x.second << endl;
     }
 }
 int32_t main()

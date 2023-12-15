@@ -20,6 +20,7 @@ typedef long double ld;
 #define sz(x) ((ll)(x).size())
 #define int long long
 int mod = 1000000007;
+int MOD = 998244353;
 int modInverse(int A, int M)
 {
     int m0 = M;
@@ -61,63 +62,82 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
+vector<vector<int>> L;
+vector<vector<bool>> W;
+vector<bool> vis;
+vector<int> meh0, inv, meh1;
+void allpaths(int i)
+{
+    forn(j, sz(L[i]))
+    {
+        if (!vis[L[i][j]])
+        {
+            vis[L[i][j]] = true;
+            allpaths(L[i][j]);
+        }
+        if (W[i][j])
+        {
+            meh1[i]++;
+            // inv[i] += meh0[L[i][j]];
+            inv[i] %= MOD;
+        }
+        else
+        {
+            meh0[i]++;
+            inv[i] %= MOD;
+        }
+        inv[i] += inv[L[i][j]] + meh1[i] * meh0[L[i][j]];
+        meh1[i] += meh1[L[i][j]];
+        meh0[i] += meh0[L[i][j]];
+        inv[i] %= MOD;
+    }
+}
 
 void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    W.resize(n);
+    L.resize(n);
+    vis.resize(n, false);
+    meh0.resize(n, 0);
+    meh1.resize(n, 0);
+    inv.resize(n, 0);
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        int s;
+        cin >> s;
+        W[i].resize(s, false);
+        forn(j, s)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            int x, y;
+            cin >> x >> y;
+            x--;
+            L[i].push_back(x);
+            if (y == 1)
+            {
+                W[i][j] = true;
+            }
         }
     }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
-        }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
-        }
-        cout << ans << endl;
-    }
+    // for (auto x : L)
+    // {
+    //     for (auto y : x)
+    //     {
+    //         cout << y << " ";
+    //     }
+    //     cout << endl;
+    // }
+    vis[0] = true;
+    allpaths(0);
+    cout << inv[0] << endl;
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
+    int t = 1;
     while (t--)
     {
         solv();

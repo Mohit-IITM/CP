@@ -66,50 +66,42 @@ void solv()
 {
     int n;
     cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
+    string s;
+    cin >> s;
+    int dif = 0, n1 = 0;
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        if (s[i] != s[n - i - 1])
         {
-            p1++;
+            dif++;
         }
-        if (a[i] % 4 == 2)
+        if (s[i] == '1')
         {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            n1++;
         }
     }
-    if (su % 4 != 0)
+    bool odd = n % 2;
+    dif /= 2;
+    // cout << dif << endl;
+    forn(i, n + 1)
     {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        if (i < dif || n - i < dif)
         {
-            p1 -= 2;
-            ans += 2;
+            cout << 0;
         }
-        if (p1 != 0)
+        else
         {
-            ans += (p1 / 4) * 3;
+            if (!odd)
+            {
+                cout << (i % 2 == n1 % 2);
+            }
+            else
+            {
+                cout << 1;
+            }
         }
-        cout << ans << endl;
     }
+    cout << endl;
 }
 int32_t main()
 {

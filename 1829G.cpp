@@ -23,49 +23,52 @@ int mod = 1000000007;
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
-void solv(vector<vector<int>> a)
-{
-    int n;
-    cin >> n;
-
-    int row, col;
-    forn(i, 2023)
-    {
-        forn(j, i + 1)
-        {
-            if (a[i][j] == n)
-            {
-                row = i;
-                col = j;
-                break;
-            }
-        }
-    }
-    int st = 1;
-    int ans = 0;
-    cout << row << " " << col << endl;
-}
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     int t;
     cin >> t;
-    vector<vector<int>> a(2023, vector<int>(2023, 0));
-    int str = 1;
-    forn(i, 2023)
+    vector<int> v;
+    int k = 1;
+    int ma = 1e6;
+    while (true)
     {
-        forn(j, i + 1)
+        if (k * (k + 1) / 2 > ma)
         {
-            int col = (2023 - i - 1) / 2 + j;
-            cout << i << " " << col << " " << str << endl;
-            a[i][col] = str;
-            str++;
+            break;
+        }
+        v.push_back(k * (k + 1) / 2);
+        k++;
+    }
+    map<int, int> m1, m2;
+    m1[1] = 1;
+    m2[1] = 1;
+    for (int i = 2; i <= ma; i++)
+    {
+        int temp = lower_bound(v.begin(), v.end(), i) - v.begin();
+        if (i == v[temp])
+        {
+            m2[i] = i * i;
+            m1[i] = i * i + m1[i - temp - 1];
+        }
+        else
+        {
+            m2[i] = i * i + m2[i - temp];
+            if (i - 1 == v[temp - 1])
+            {
+                m1[i] = i * i + m2[i - temp];
+            }
+            else
+            {
+                m1[i] = i * i + m2[i - temp] + m1[i - temp - 1];
+            }
         }
     }
     while (t--)
     {
-        solv(a);
+        int n;
+        cin >> n;
+        cout << m1[n] << endl;
     }
 }

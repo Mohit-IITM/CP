@@ -20,6 +20,44 @@ typedef long double ld;
 #define sz(x) ((ll)(x).size())
 #define int long long
 int mod = 1000000007;
+int modInverse(int A, int M)
+{
+    int m0 = M;
+    int y = 0, x = 1;
+    if (M == 1)
+        return 0;
+    while (A > 1)
+    {
+        int q = A / M;
+        int t = M;
+        M = A % M, A = t;
+        t = y;
+        y = x - q * y;
+        x = t;
+    }
+    if (x < 0)
+    {
+        x += m0;
+    }
+    return x;
+}
+vector<bool> sieve(int n)
+{
+    // Time Complexity:- O(log(log(n)))
+    vector<bool> is_prime(n + 1, 1);
+    is_prime[0] = is_prime[1] = 0;
+    for (int i = 2; i <= n; i++)
+    {
+        if (is_prime[i] && 1LL * i * i <= n)
+        {
+            for (int j = i * i; j <= n; j += i)
+            {
+                is_prime[j] = 0;
+            }
+        }
+    }
+    return is_prime;
+}
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
@@ -28,32 +66,28 @@ void solv()
 {
     int n;
     cin >> n;
-    vector<int> digits;
-    while (n > 0)
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
     {
-        digits.push_back(n % 9);
-        n /= 9;
+        cin >> a[i];
     }
-    reverse(all(digits));
-    for (auto x : digits)
+    const int N = (int)10;
+    bitset<N> b;
+    b[1] = 1;
+    cout << b << endl;
+    for (int i = 0; i < n; i++)
     {
-        if (x < 4)
-        {
-            cout << x;
-        }
-        else
-        {
-            cout << x + 1;
-        }
+        b |= (b >> (i + 1) << (i + 1 + a[i]));
+        cout << b << endl;
     }
-    cout << endl;
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int t;
-    cin >> t;
+    cout.tie(0);
+    int t = 1;
+    // cin >> t;
     while (t--)
     {
         solv();

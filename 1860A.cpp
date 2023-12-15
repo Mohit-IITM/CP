@@ -64,51 +64,34 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
-    forn(i, n)
+    string s;
+    cin >> s;
+    if (s == "()")
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
-        {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
-        }
-    }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
+        cout << "NO" << endl;
+        return;
     }
     else
     {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
+        cout << "YES" << endl;
+        string s1 = "", s2 = "";
+        forn(i, sz(s))
         {
-            p1 -= 2;
-            ans += 2;
+            s1 += "()";
+            s2 += '(';
         }
-        if (p1 != 0)
+        forn(i, sz(s))
         {
-            ans += (p1 / 4) * 3;
+            s2 += ')';
         }
-        cout << ans << endl;
+        if (s1.find(s) != string::npos)
+        {
+            cout << s2 << endl;
+        }
+        else
+        {
+            cout << s1 << endl;
+        }
     }
 }
 int32_t main()

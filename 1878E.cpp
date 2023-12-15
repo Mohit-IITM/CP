@@ -61,54 +61,67 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
+string to_bin(int x)
+{
+    string s = "";
+    while (x)
+    {
+        if (x & 1)
+        {
+            s += '1';
+        }
+        else
+        {
+            s += '0';
+        }
+        x /= 2;
+    }
+    forn(i, 70 - sz(s))
+    {
+        s += '0';
+    }
+    reverse(all(s));
+    return s;
+}
 void solv()
 {
     int n;
     cin >> n;
+    vector<vector<int>> pref(70, vector<int>(n+1, 0));
     vector<int> a(n);
-    int su = 0, p1 = 0, p2 = 0, p3 = 0;
     forn(i, n)
     {
-        cin >> a[i];
-        su += a[i];
-        if (a[i] % 4 == 1)
+        cin>>a[i];
+        string s = to_bin(a[i]);
+        forn(j, 70)
         {
-            p1++;
-        }
-        if (a[i] % 4 == 2)
-        {
-            p2++;
-        }
-        if (a[i] % 4 == 3)
-        {
-            p3++;
+            if (s[j] == '1')
+            {
+                pref[j][i+1]++;
+            }
+            pref[j][i+1] += pref[j][i];
         }
     }
-    if (su % 4 != 0)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        int ans = 0;
-        int mi3 = min(p1, p3);
-        p1 -= mi3;
-        p3 -= mi3;
-        ans += mi3;
-        p1 = max(p1, p3);
-        ans += p2 / 2;
-        p2 %= 2;
-        if (p2 != 0)
-        {
-            p1 -= 2;
-            ans += 2;
+    int q;
+    cin>>q;
+    forn(i,q){
+        int lo,k;
+        cin>>lo>>k;
+        if(k>a[lo]){
+            cout<<-1<<" ";
         }
-        if (p1 != 0)
-        {
-            ans += (p1 / 4) * 3;
+        else{
+            string s = to_bin(k);
+            vector<int> targ(70,0);
+            forn(i,70){
+                if(s[i]=='1'){
+                    targ[i]++;
+                }
+                targ[i]+=pref[i][lo];
+            }
+            int mind=n;
+            
         }
-        cout << ans << endl;
     }
 }
 int32_t main()
