@@ -64,6 +64,24 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n), b(n);
+    forn(i, n)
+    {
+        cin >> a[i];
+    }
+    b = a;
+    sort(all(a));
+    forn(i, n)
+    {
+        if (a[i] % 2 != b[i] % 2)
+        {
+            na;
+            return;
+        }
+    }
+    ya;
 }
 int32_t main()
 {

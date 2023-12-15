@@ -64,6 +64,52 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    forn(i, n)
+    {
+        cin >> a[i];
+    }
+    int st = a[0], en = a.back();
+    int lind = -1, co = 0;
+    ;
+    forn(i, n)
+    {
+        if (a[i] == st)
+        {
+            lind = i;
+            co++;
+        }
+        if (co == k)
+        {
+            break;
+        }
+    }
+    if (co != k)
+    {
+        na;
+        return;
+    }
+    if (st == en)
+    {
+        ya;
+        return;
+    }
+    int co2 = 0;
+    for (int i = lind; i < n; i++)
+    {
+        if (a[i] == en)
+        {
+            co2++;
+        }
+    }
+    if (co2 < k)
+    {
+        na;
+        return;
+    }
+    ya;
 }
 int32_t main()
 {

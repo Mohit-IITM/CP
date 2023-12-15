@@ -61,17 +61,52 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
+void rec(vector<int> &A, set<int> &pres, vector<set<int>> &ans)
+{
+    if (pres.size() == A.size())
+    {
+        ans.push_back(pres);
+        return;
+    }
+    for (auto x : A)
+    {
+        pres.insert(x);
+        rec(A, pres, ans);
+        pres.erase(x);
+    }
+}
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> A(n);
+    for (auto &x : A)
+    {
+        cin >> x;
+    }
+    vector<set<int>> ans1;
+    vector<vector<int>> ans;
+    set<int> prems;
+    rec(A, prems, ans1);
+    for (auto x : ans1)
+    {
+        // vector<int> temp;
+        for (auto y : x)
+        {
+            // temp.push_back(y);
+            cout << y << " ";
+        }
+        // ans.push_back(temp);
+        cout << endl;
+    }
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t--)
     {
         solv();

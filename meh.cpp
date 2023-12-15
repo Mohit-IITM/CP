@@ -61,36 +61,70 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
+void rec(vector<int> a, int ind, vector<bool> marked, vector<int> &ans, int k)
+{
+    if (!marked[ind])
+    {
+        marked[ind] = true;
+        ans[ind] *= a[ind];
+        ans[ind] %= k;
+        for (int i = ind + 1; i < a.size(); i++)
+        {
+            if (a[i] > a[ind])
+            {
+                if (!marked[i])
+                {
+                    rec(a, i, marked, ans, k);
+                    ans[ind] *= ans[i];
+                    ans[ind] %= k;
+                }
+            }
+        }
+    }
+}
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> ans(n * n, 1);
-    forn(i, n * n)
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n), ans(n, 1);
+    bool c1 = false;
+    forn(i, n)
     {
-        if (i >= n)
+        cin >> a[i];
+        if (a[i] % k == 0)
         {
-            ans[i] = (i % n + 1) * ans[i - n];
-        }
-        else
-        {
-            ans[i] = (i % n + 1);
+            c1 = true;
         }
     }
-    forn(i, n * n)
+    vector<bool> mark(n, false);
+    forn(i, n)
+    {
+        rec(a, i, mark, ans, k);
+    }
+    forn(i, n)
     {
         cout << ans[i] << " ";
+        if (ans[i] == 0)
+        {
+            c1 = true;
+        }
     }
-    cout << endl;
+    if (c1)
+    {
+        ya;
+    }
+    else
+    {
+        na;
+    }
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t--)
     {
         solv();

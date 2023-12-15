@@ -64,6 +64,27 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    forn(i, n)
+    {
+        cin >> a[i];
+    }
+    int ans = 0;
+    forn(i, n)
+    {
+        if (a[i] > n)
+        {
+            int k1 = k;
+            while (k1 * a[i] - (k1 - 1) * (a[i] - n) > k * n)
+            {
+                ans++;
+                k1--;
+            }
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

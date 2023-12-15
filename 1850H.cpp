@@ -62,8 +62,60 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+void dfs(vector<vector<pair<int, int>>> &fild, vector<bool> &vis, vector<int> &coord, int node, bool &flag)
+{
+    for (auto x : fild[node])
+    {
+        if (!vis[x.first])
+        {
+            vis[x.first] = true;
+            coord[x.first] = coord[node] + x.second;
+            dfs(fild, vis, coord, x.first, flag);
+        }
+        else
+        {
+            if (coord[x.first] != coord[node] + x.second)
+            {
+                flag = false;
+                return;
+            }
+        }
+    }
+}
 void solv()
 {
+    int n, m;
+    cin >> n >> m;
+    bool c1 = true;
+    vector<vector<pair<int, int>>> fild(n);
+    forn(i, m)
+    {
+        int x, y, v;
+        cin >> x >> y >> v;
+        x--;
+        y--;
+        fild[x].push_back({y, v});
+        fild[y].push_back({x, -v});
+    }
+    vector<bool> vis(n, false);
+    vector<int> coord(n);
+    forn(i, n)
+    {
+        if (!vis[i])
+        {
+            vis[i] = true;
+            coord[i] = 0;
+            dfs(fild, vis, coord, i, c1);
+        }
+    }
+    if (c1)
+    {
+        ya;
+    }
+    else
+    {
+        na;
+    }
 }
 int32_t main()
 {

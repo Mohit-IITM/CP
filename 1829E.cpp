@@ -62,29 +62,71 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
-void dfs(map<pair<int, int>, bool> &marked, map<pair<int, int>, vector<pair<int, int>>> &field, pair<int, int> node, int &vol, vector<vector<int>> a)
+void dfs(vector<vector<bool>> &marked, int i, int j, int &vol, vector<vector<int>> &a)
+
+// The '&' indicates passing by refrence. It is very important.
+// If we don't do that a new copy of the vectors is made everytime we call dfs.
+// It is bad for 2 reasons. 1.) None of the changes we make inside dfs will be reflected.
+// 2) It is o(n) complexity to create a new vecotr, so if we call dfs n times we get o(n^2) program.
+// This can be avoided just by passing by refrence.
+
 {
-    if (!marked[node])
+    int n = a.size();
+    int m = a[0].size();
+    if (i != n - 1)
     {
-        marked[node] = true;
-        vol += a[node.first][node.second];
-        for (auto x : field[node])
+        if (a[i + 1][j] != 0 && !marked[i + 1][j])
         {
-            if (!marked[x])
-            {
-                dfs(marked, field, x, vol, a);
-            }
+            marked[i + 1][j] = true;
+            // Marking node if it's not marked.
+
+            vol += a[i + 1][j];
+            // Adding volume of that node.
+
+            dfs(marked, i + 1, j, vol, a);
+            // Running dfs on the next node.
+        }
+    }
+    if (j != m - 1)
+    {
+        if (a[i][j + 1] != 0 && !marked[i][j + 1])
+        {
+            marked[i][j + 1] = true;
+            vol += a[i][j + 1];
+            dfs(marked, i, j + 1, vol, a);
+        }
+    }
+    if (i != 0)
+    {
+        if (a[i - 1][j] != 0 && !marked[i - 1][j])
+        {
+            marked[i - 1][j] = true;
+            vol += a[i - 1][j];
+            dfs(marked, i - 1, j, vol, a);
+        }
+    }
+    if (j != 0)
+    {
+        if (a[i][j - 1] != 0 && !marked[i][j - 1])
+        {
+            marked[i][j - 1] = true;
+            vol += a[i][j - 1];
+            dfs(marked, i, j - 1, vol, a);
         }
     }
 }
 
 void solv()
 {
-    int n, m;
+    int n, m, vol = 0, mavol = 0;
     cin >> n >> m;
+
     vector<vector<int>> a(n, vector<int>(m));
-    map<pair<int, int>, vector<pair<int, int>>> field;
-    map<pair<int, int>, bool> marked;
+    // Intializing the graph.
+
+    vector<vector<bool>> marked(n, vector<bool>(m, false));
+    // Vector for checking if each vertice is visited or not.
+
     forn(i, n)
     {
         forn(j, m)
@@ -92,54 +134,34 @@ void solv()
             cin >> a[i][j];
         }
     }
+    // In this paticular question, there may be many disconnected parts in the graph.
+    // We are checking for each part by running through all parts and marking all points connected to the point.
+    // We run dfs only when we reach an unmarked point to make sure we mark each graph only once.
+
     forn(i, n)
     {
         forn(j, m)
         {
-
             if (a[i][j] != 0)
             {
-                marked[{i, j}] = false;
-                if (i != 0)
+                if (!marked[i][j])
                 {
-                    if (a[i - 1][j] != 0)
-                    {
-                        field[{i, j}].push_back({i - 1, j});
-                    }
-                }
-                if (j != 0)
-                {
-                    if (a[i][j - 1] != 0)
-                    {
-                        field[{i, j}].push_back({i, j - 1});
-                        // field[{i, j - 1}].push_back({i, j});
-                    }
-                }
-                if (i != n - 1)
-                {
-                    if (a[i + 1][j] != 0)
-                    {
-                        field[{i, j}].push_back({i + 1, j});
-                        // field[{i + 1, j}].push_back({i, j});
-                    }
-                }
-                if (j != m - 1)
-                {
-                    if (a[i][j + 1] != 0)
-                    {
-                        field[{i, j}].push_back({i, j + 1});
-                        // field[{i, j + 1}].push_back({i, j});
-                    }
+                    marked[i][j] = true;
+                    // Marking the point as visited.
+
+                    vol += a[i][j];
+                    // Adding the volume of the point.
+
+                    dfs(marked, i, j, vol, a);
+                    // Running DFS on the unmarked point.
+
+                    mavol = max(vol, mavol);
+                    // Storing max volume.
+
+                    vol = 0;
                 }
             }
         }
-    }
-    int vol = 0, mavol = 0;
-    for (auto node : marked)
-    {
-        dfs(marked, field, node.first, vol, a);
-        mavol = max(vol, mavol);
-        vol = 0;
     }
     cout << mavol << endl;
 }

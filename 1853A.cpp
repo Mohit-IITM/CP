@@ -64,6 +64,19 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    forn(i, n)
+    {
+        cin >> a[i];
+    }
+    int mi = LONG_LONG_MAX;
+    forn(i, n - 1)
+    {
+        mi = min(a[i + 1] - a[i], mi);
+    }
+    cout << max(((mi + 2) / 2), 0LL) << endl;
 }
 int32_t main()
 {

@@ -62,8 +62,55 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+int dfs(vector<vector<int>> fil, vector<int> &chils, int node, int par, vector<bool> &mark)
+{
+    if (!mark[node])
+    {
+        mark[node] = true;
+        for (auto x : fil[node])
+        {
+            if (x != par)
+            {
+                chils[node] += dfs(fil, chils, x, node, mark) + 1;
+            }
+        }
+        return chils[node];
+    }
+    else
+    {
+        return chils[node];
+    }
+}
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<vector<int>> fil(n);
+    vector<int> abs(n, 0);
+    forn(i, n - 1)
+    {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        fil[x].push_back(y);
+        fil[y].push_back(x);
+    }
+    vector<bool> mark(n, false);
+    dfs(fil, abs, 0, -1, mark);
+    int ans = 0, ma = 0;
+    forn(i, n)
+    {
+        ma = max(abs[i], ma);
+    }
+    forn(i, n)
+    {
+        if (abs[i] % 2 == 1 && (ma - abs[i]) % 2 == 0)
+        {
+            ans++;
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

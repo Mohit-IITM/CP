@@ -61,9 +61,50 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
+void dfs(int node, int parent, vector<vector<int>> &chu, vector<int> &sum)
+{
+    if (sz(chu[node]) == 1 && chu[node][0] == parent)
+    {
+        sum[node] = 1;
+    }
+    else
+    {
+        for (auto x : chu[node])
+        {
+            if (x != parent)
+            {
+                dfs(x, node, chu, sum);
+                sum[node] += sum[x];
+            }
+        }
+    }
+}
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<vector<int>> chu(n);
+    forn(i, n - 1)
+    {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        chu[x].push_back(y);
+        chu[y].push_back(x);
+    }
+    vector<int> sum(n, 0);
+    dfs(0, -1, chu, sum);
+    int q;
+    cin >> q;
+    forn(i, q)
+    {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        cout << sum[x] * sum[y] << endl;
+    }
 }
 int32_t main()
 {

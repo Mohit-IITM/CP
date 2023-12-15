@@ -64,12 +64,81 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n), coi(10, 0), coc(10, 0);
+    forn(i, n)
+    {
+        int x;
+        cin >> x;
+        coi[x - 1]++;
+    }
+    int mic = -1;
+    forn(_, 2)
+    {
+        cout << "- 0" << endl;
+        cout << flush;
+        forn(i, n)
+        {
+            int x;
+            cin >> x;
+            a[i] = x;
+            coc[x - 1]++;
+        }
+        forn(i, 10)
+        {
+            if (coc[i] != coi[i])
+            {
+                mic = i;
+            }
+        }
+    }
+    vector<int> inds;
+    forn(i, n)
+    {
+        if (a[i] != mic)
+        {
+            inds.push_back(i + 1);
+        }
+    }
+    string s = "- ";
+    s += to_string(sz(inds));
+    s += " ";
+    for (auto x : inds)
+    {
+        s += to_string(x);
+        s += " ";
+    }
+    cout << s << endl;
+    cout << flush;
+    vector<int> b(n - sz(inds));
+    forn(_, 1)
+    {
+        forn(i, n - sz(inds))
+        {
+            cin >> b[i];
+        }
+        cout << "- 0" << endl;
+        cout << flush;
+    }
+    forn(i, n - sz(inds))
+    {
+        cin >> b[i];
+    }
+    forn(i, sz(b))
+    {
+        if (b[i] != mic)
+        {
+            cout << "! " << i + 1 << endl;
+            cout << flush;
+        }
+    }
 }
 int32_t main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    cout.tie(0);
+    // cout.tie(0);
     int t;
     cin >> t;
     while (t--)

@@ -61,9 +61,37 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
 void solv()
 {
+    string s;
+    cin >> s;
+    int n = sz(s);
+    int m;
+    cin >> m;
+    string l, r;
+    cin >> l >> r;
+    bool c1 = false;
+    vector<vector<int>> a(10);
+    forn(i, n)
+    {
+        a[s[i] - '0'].push_back(i);
+    }
+    int ma = -1, prev = -1;
+    forn(j, m)
+    {
+        prev = ma + 1;
+        for (int i = (l[j] - '0'); i <= (r[j] - '0'); i++)
+        {
+            if (lower_bound(a[i].begin(), a[i].end(), prev) == a[i].end())
+            {
+                ya;
+                return;
+            }
+            ma = max(ma, *lower_bound(a[i].begin(), a[i].end(), prev));
+            // cout << ma << endl;
+        }
+    }
+    na;
 }
 int32_t main()
 {

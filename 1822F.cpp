@@ -62,8 +62,59 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+void dfs(vector<vector<int>> &adj, vector<int> &dir, int node, int par)
+{
+    for (auto x : adj[node])
+    {
+        if (x != par)
+        {
+            dir[x] = dir[node] + 1;
+            dfs(adj, dir, x, node);
+        }
+    }
+}
 void solv()
 {
+    int n, c, k;
+    cin >> n >> k >> c;
+    vector<vector<int>> adj(n);
+    vector<int> dist(n, 0), dist1(n, 0), dist2(n, 0);
+    forn(i, n - 1)
+    {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    dfs(adj, dist, 0, -1);
+    int ma = -1, l = -1;
+    forn(i, n)
+    {
+        if (dist[i] > ma)
+        {
+            ma = dist[i];
+            l = i;
+        }
+    }
+    dfs(adj, dist1, l, -1);
+    ma = -1;
+    forn(i, n)
+    {
+        if (dist1[i] > ma)
+        {
+            ma = dist1[i];
+            l = i;
+        }
+    }
+    dfs(adj, dist2, l, -1);
+    int ans = 0;
+    forn(i, n)
+    {
+        ans = max(ans, k * (max(dist2[i], dist1[i])) - c * dist[i]);
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

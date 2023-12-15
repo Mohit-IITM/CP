@@ -64,6 +64,31 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    map<double, int> slopes;
+    map<int, int> xs, ys, xy, yx;
+    int n;
+    cin >> n;
+    vector<int> a(n), b(n);
+    forn(i, n)
+    {
+        int x, y;
+        cin >> x >> y;
+        a[i] = x;
+        b[i] = y;
+        xs[x]++;
+        ys[y]++;
+        xy[x - y]++;
+        yx[y + x]++;
+    }
+    int ans = 0;
+    forn(i, n)
+    {
+        ans += --xs[a[i]];
+        ans += --ys[b[i]];
+        ans += --xy[a[i] - b[i]];
+        ans += --yx[a[i] + b[i]];
+    }
+    cout << ans * 2 << endl;
 }
 int32_t main()
 {

@@ -64,6 +64,9 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int a, b;
+    cin >> a >> b;
+    cout << a + b << endl;
 }
 int32_t main()
 {

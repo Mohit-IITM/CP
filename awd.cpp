@@ -1,9 +1,21 @@
-#include <bits/stdc++.h>
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <set>
+#include <map>
+#include <array>
+#include <algorithm>
+#include <queue>
+#include <stack>
+#include <list>
 #include <chrono>
 #include <random>
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+#include <cstring>
 #include <iomanip>
-#include <fstream>
-
 using namespace std;
 
 /* ************************************************************************************************************************************ */
@@ -13,13 +25,13 @@ typedef long double ld;
 #define forsn(i, s, e) for (ll i = s; i < e; i++)
 #define rforn(i, s) for (ll i = s; i >= 0; i--)
 #define rforsn(i, s, e) for (ll i = s; i >= e; i--)
-#define endl "\n"
 #define ya cout << "YES" << endl;
 #define na cout << "NO" << endl;
 #define all(x) (x).begin(), (x).end()
 #define sz(x) ((ll)(x).size())
 #define int long long
 int mod = 1000000007;
+
 int modInverse(int A, int M)
 {
     int m0 = M;
@@ -41,6 +53,7 @@ int modInverse(int A, int M)
     }
     return x;
 }
+
 vector<bool> sieve(int n)
 {
     // Time Complexity:- O(log(log(n)))
@@ -59,11 +72,39 @@ vector<bool> sieve(int n)
     return is_prime;
 }
 
-/* ************************************************************************************************************************************* */
-/* CODE BEGINS HERE */
+#define endl "\n"
+// Comment out for Interactive problems
 
 void solv()
 {
+    map<int, int> m;
+    string s = "Abc";
+    vector<int> a(5, -1);
+    set<int> s1;
+    priority_queue<int, vector<int>, greater<int>> pq;
+    forn(i, 2)
+    {
+        int y;
+        cin >> y;
+        cout << y << " ";
+    }
+    cout << endl;
+    forn(i, 10)
+    {
+        s1.insert(i);
+        pq.push(i);
+    }
+    for (auto x : s1)
+    {
+        cout << x << " ";
+    }
+    cout << endl;
+    while (!pq.empty())
+    {
+        cout << pq.top() << " ";
+        pq.pop();
+    }
+    cout << endl;
 }
 int32_t main()
 {

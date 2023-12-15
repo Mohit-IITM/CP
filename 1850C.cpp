@@ -64,6 +64,20 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    string ans = "";
+    forn(i, 8)
+    {
+        forn(j, 8)
+        {
+            char x;
+            cin >> x;
+            if (x != '.')
+            {
+                ans += x;
+            }
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

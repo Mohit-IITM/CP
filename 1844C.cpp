@@ -61,9 +61,56 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a, b;
+    int ma = LONG_LONG_MIN;
+    if (n == 1)
+    {
+        int x;
+        cin >> x;
+        cout << x << endl;
+        return;
+    }
+    forn(i, n)
+    {
+        int x;
+        cin >> x;
+        if (i % 2 == 1)
+        {
+            b.push_back(x);
+        }
+        else
+        {
+            a.push_back(x);
+        }
+        ma = max(x, ma);
+    }
+    if (ma < 0)
+    {
+        cout << ma << endl;
+        return;
+    }
+    sort(all(a), greater<int>());
+    sort(all(b), greater<int>());
+    int ma1 = 0, ma2 = 0;
+    forn(i, a.size())
+    {
+        if (a[i] > 0)
+        {
+            ma1 += a[i];
+        }
+    }
+    forn(i, b.size())
+    {
+        if (b[i] > 0)
+        {
+            ma2 += b[i];
+        }
+    }
+    cout << max(ma1, ma2) << endl;
 }
 int32_t main()
 {

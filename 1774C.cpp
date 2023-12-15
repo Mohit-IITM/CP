@@ -30,22 +30,16 @@ void solv()
     cin >> n;
     string s;
     cin >> s;
-    int ans[n - 1];
-    ans[n - 2] = n - 1;
-    for (int i = n - 2; i > 0; i--)
+    bool c1 = true;
+    int prev = 1;
+    cout << prev << " ";
+    forsn(i, 1, n - 1)
     {
         if (s[i] != s[i - 1])
         {
-            ans[i - 1] = ans[i] - 1;
+            prev = i + 1;
         }
-        else
-        {
-            ans[i - 1] = ans[i];
-        }
-    }
-    for (int i = 0; i < n - 1; i++)
-    {
-        cout << ans[i] << " ";
+        cout << prev << " ";
     }
     cout << endl;
 }

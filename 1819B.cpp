@@ -64,6 +64,31 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<pair<int, int>> fils(n);
+    int mx = 0, my = 0, ar = 0;
+    forn(i, n)
+    {
+        cin >> fils[i].first >> fils[i].second;
+        ar += fils[i].first * fils[i].second;
+        mx = max(mx, fils[i].first);
+        my = max(my, fils[i].second);
+    }
+    set<pair<int, int>> ans;
+    if (ar % mx == 0)
+    {
+        ans.insert({mx, ar / mx});
+    }
+    if (ar % my == 0)
+    {
+        ans.insert({ar / my, my});
+    }
+    cout << sz(ans) << endl;
+    for (auto x : ans)
+    {
+        cout << x.first << " " << x.second << endl;
+    }
 }
 int32_t main()
 {

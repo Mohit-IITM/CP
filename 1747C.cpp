@@ -64,6 +64,23 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    int mi = LONG_LONG_MAX;
+    forn(i, n)
+    {
+        cin >> a[i];
+        mi = min(mi, a[i]);
+    }
+    if (a[0] <= mi)
+    {
+        cout << "BOB" << endl;
+    }
+    else
+    {
+        cout << "ALICE" << endl;
+    }
 }
 int32_t main()
 {

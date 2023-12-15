@@ -64,6 +64,31 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, s;
+    cin >> n >> s;
+    vector<vector<int>> adj(n);
+    set<int> ws;
+    forn(i, n - 1)
+    {
+        int u, v, w;
+        cin >> u >> v >> w;
+        u--;
+        v--;
+        ws.insert(w);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    int ans = 1;
+    bool c1 = false;
+    if (*ws.rbegin() < s)
+    {
+        c1 = true;
+    }
+    if (c1)
+    {
+        ans += (n - 2) * (n - 1) / 2;
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

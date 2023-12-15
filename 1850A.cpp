@@ -64,6 +64,20 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    vector<int> ans(3);
+    forn(i, 3)
+    {
+        cin >> ans[i];
+    }
+    sort(all(ans));
+    if (ans[2] + ans[1] >= 10)
+    {
+        ya;
+    }
+    else
+    {
+        na;
+    }
 }
 int32_t main()
 {

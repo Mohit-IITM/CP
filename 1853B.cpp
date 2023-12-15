@@ -62,8 +62,35 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+vector<int> fib(40);
+
 void solv()
 {
+    int n, k;
+    cin >> n >> k;
+    if (n == 0)
+    {
+        cout << 1 << endl;
+        return;
+    }
+    if (k > fib.size() || n < fib[k - 1])
+    {
+        cout << 0 << endl;
+        return;
+    }
+    int ans = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        int val = n - i * fib[k - 1];
+        if (val % fib[k - 2] == 0)
+        {
+            if (i >= val / fib[k - 2] && val >= 0)
+            {
+                ans++;
+            }
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {
@@ -72,6 +99,13 @@ int32_t main()
     cout.tie(0);
     int t;
     cin >> t;
+    fib[0] = 0;
+    fib[1] = 1;
+    for (int i = 2; i < 40; i++)
+    {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+    // cout << fib.back();
     while (t--)
     {
         solv();

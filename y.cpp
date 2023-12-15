@@ -64,6 +64,44 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n = 100, x = 10, el = -1, element, value;
+    vector<int> a(n, x);
+    // Creates a vector with n elements , all equal to x.
+
+    vector<vector<int>> a(n, vector<int>(n, 0));
+    // n*n 2d vector with all zeros
+    // Notice how the initialization is done.
+
+    vector<int> l;
+    // Similar to py list, you can keeping adding elements
+    l.push_back(el);
+    // push_back is append.
+
+    vector<string> vs;
+    // Vector of strings
+
+    map<int, int> m;
+    // Similar to py dict, elements not in the map have value 0.
+    m[element] = value;
+    // Each element is stored as a key-value pair.
+    for (auto x : m)
+    {
+        cout << x.first << " " << x.second << endl;
+    }
+    // x is an element in map. x.first is key. x.second is it's value.
+
+    // You can create any sort of structure you want.
+    vector<map<vector<int>, int>> ds1;
+    // This is a vector where each element is a map which points from vector to int.
+
+    // Sample implementation of a frequency array.
+    map<int, int> freq;
+    forn(i, n)
+    {
+        cin >> x;
+        freq[x]++;
+    }
+    // The map now has the counts of each x.
 }
 int32_t main()
 {

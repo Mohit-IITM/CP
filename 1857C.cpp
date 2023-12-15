@@ -64,6 +64,41 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> b(n * (n - 1) / 2);
+    map<int, int> count;
+    forn(i, n * (n - 1) / 2)
+    {
+        cin >> b[i];
+        count[b[i]]++;
+    }
+    sort(all(b));
+    vector<int> a, b1;
+    int ind = 0;
+    for (auto x : count)
+    {
+        b1.push_back(x.first);
+        // cout << x.first << " " << x.second << endl;
+    }
+    b1.push_back(b.back());
+    while (sz(a) < n)
+    {
+        a.push_back(b1[ind]);
+        int val = count[b1[ind]];
+        count[b1[ind]] -= (n - sz(a));
+        // cout << count[b1[ind]] << endl;
+        if (count[b1[ind]] <= 0)
+        {
+            ind++;
+        }
+    }
+    // cout << endl;
+    forn(i, n)
+    {
+        cout << a[i] << " ";
+    }
+    cout << endl;
 }
 int32_t main()
 {

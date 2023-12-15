@@ -61,9 +61,17 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
-
+set<int> ans;
 void solv()
 {
+    int n;
+    cin >> n;
+    if (ans.find(n) != ans.end())
+    {
+        ya;
+        return;
+    }
+    na;
 }
 int32_t main()
 {
@@ -72,6 +80,17 @@ int32_t main()
     cout.tie(0);
     int t;
     cin >> t;
+    forsn(i, 2, 1000000)
+    {
+        int temp = i * i + i + 1, temp1 = i * i;
+        ans.insert(temp);
+        while (temp1 < 1e18)
+        {
+            temp1 *= i;
+            temp += temp1;
+            ans.insert(temp);
+        }
+    }
     while (t--)
     {
         solv();

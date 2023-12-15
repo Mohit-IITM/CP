@@ -64,6 +64,22 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    forn(i, n)
+    {
+        cin >> a[i];
+    }
+    int ma = 0;
+    forn(i, n - 1)
+    {
+        if (a[i] > a[i + 1])
+        {
+            ma = max(ma, a[i]);
+        }
+    }
+    cout << ma << endl;
 }
 int32_t main()
 {

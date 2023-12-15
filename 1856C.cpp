@@ -64,28 +64,76 @@ vector<bool> sieve(int n)
 
 void solv()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n), bef(n), aft(n);
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    int ma = 0;
     forn(i, n)
     {
         cin >> a[i];
-        bef[i] = a[i] + i;
-        aft[i] = a[i] - i;
+        if (a[i] > ma)
+        {
+            ma = a[i];
+        }
     }
-    forsn(i, 1, n)
+    vector<vector<int>> dp(n, vector<int>(2 * n + 2, 0));
+    for (int i = n - 1; i >= 0; i--)
     {
-
-        bef[i] = max(bef[i], bef[i - 1]);
+        for (int j = 0; j < 2 * n + 2; j++)
+        {
+            if (i == n - 1)
+            {
+                if (a[i] >= ma - n + j)
+                {
+                    dp[i][j] == 0;
+                }
+                else
+                {
+                    dp[i][j] = -1;
+                }
+            }
+            else
+            {
+                if (j > 0)
+                {
+                    if (dp[i + 1][j - 1] == -1)
+                    {
+                        if (a[i] == ma - n + j)
+                        {
+                            dp[i][j] = 0;
+                        }
+                        else
+                        {
+                            dp[i][j] = -1;
+                        }
+                    }
+                    else
+                    {
+                        if (a[i] >= ma - n + j)
+                        {
+                            dp[i][j] = 0;
+                        }
+                        else
+                        {
+                            dp[i][j] = max(dp[i + 1][j - 1] + ma - n + j - a[i], 0LL);
+                        }
+                    }
+                }
+            }
+        }
     }
-    for (int i = n - 2; i >= 0; i--)
+    int ans = 0;
+    forn(i, n)
     {
-        aft[i] = max(aft[i], aft[i + 1]);
-    }
-    int ans = LONG_LONG_MIN;
-    for (int i = 1; i < n - 1; i++)
-    {
-        ans = max(ans, a[i] + bef[i - 1] + aft[i + 1]);
+        forn(j, 2 * n + 2)
+        {
+            // cout << dp[i][j] << " ";
+            if (dp[i][j] <= k && dp[i][j] != -1)
+            {
+                ans = max(ans, ma - n + j);
+            }
+        }
+        // cout << endl;
     }
     cout << ans << endl;
 }

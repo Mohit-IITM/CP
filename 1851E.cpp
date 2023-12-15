@@ -62,8 +62,67 @@ vector<bool> sieve(int n)
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
 
+void rec(vector<vector<int>> &fil, int node, vector<int> &cost, vector<bool> &vis)
+{
+    int tcost = 0;
+    for (auto x : fil[node])
+    {
+        if (!vis[x])
+        {
+            vis[x] = true;
+            rec(fil, x, cost, vis);
+        }
+        tcost += cost[x];
+    }
+    cost[node] = min(cost[node], tcost);
+}
 void solv()
 {
+    int n, k;
+    cin >> n >> k;
+    vector<int> cost(n);
+    forn(i, n)
+    {
+        cin >> cost[i];
+    }
+    forn(i, k)
+    {
+        int x;
+        cin >> x;
+        cost[x - 1] = 0;
+    }
+    vector<bool> vis(n, false);
+    vector<vector<int>> fil(n);
+    forn(i, n)
+    {
+        int m;
+        cin >> m;
+        forn(j, m)
+        {
+            int x;
+            cin >> x;
+            fil[i].push_back(x - 1);
+        }
+    }
+    forn(i, n)
+    {
+        if (sz(fil[i]) == 0)
+        {
+            vis[i] = true;
+        }
+    }
+    forn(i, n)
+    {
+        if (!vis[i])
+        {
+            rec(fil, i, cost, vis);
+        }
+    }
+    forn(i, n)
+    {
+        cout << cost[i] << " ";
+    }
+    cout << endl;
 }
 int32_t main()
 {

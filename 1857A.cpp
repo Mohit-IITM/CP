@@ -64,6 +64,27 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    int od = 0;
+    forn(i, n)
+    {
+        int x;
+        cin >> x;
+        if (x % 2 == 1)
+        {
+            od++;
+        }
+    }
+    if (od % 2 == 1)
+    {
+        na;
+    }
+    else
+    {
+        ya;
+    }
 }
 int32_t main()
 {

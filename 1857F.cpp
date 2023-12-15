@@ -64,6 +64,57 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    map<int, int> freq;
+    set<int> pos;
+    forn(i, n)
+    {
+        cin >> a[i];
+        pos.insert(a[i]);
+        freq[a[i]]++;
+    }
+    int q;
+    cin >> q;
+    forn(i, q)
+    {
+        int x, y;
+        cin >> x >> y;
+        int sq = sqrtl(x * x - 4 * y);
+        if (sq * sq != x * x - 4 * y)
+        {
+            cout << 0 << " ";
+        }
+        else
+        {
+            int a = (x + sq) / 2;
+            int b = abs(x - sq) / 2;
+            if (a + b != x)
+            {
+                if (a - b == x)
+                {
+                    b *= -1;
+                }
+            }
+            if (pos.find(a) != pos.end() && pos.find(b) != pos.end())
+            {
+                if (a != b)
+                {
+                    cout << freq[a] * freq[b] << " ";
+                }
+                else
+                {
+                    cout << freq[a] * (freq[a] - 1) / 2 << " ";
+                }
+            }
+            else
+            {
+                cout << 0 << " ";
+            }
+        }
+    }
+    cout << endl;
 }
 int32_t main()
 {

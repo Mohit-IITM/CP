@@ -64,6 +64,42 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, m, h;
+    cin >> n >> m >> h;
+    vector<pair<int, int>> ans(n);
+    forn(ii, n)
+    {
+        vector<int> temp(m);
+        forn(i, m)
+        {
+            cin >> temp[i];
+        }
+        sort(all(temp));
+        int t1 = h, ind1 = m, val1 = 0, val2 = 0;
+        forn(i, m)
+        {
+            if (t1 - temp[i] < 0)
+            {
+                ind1 = i;
+                break;
+            }
+            t1 -= temp[i];
+            val1 += temp[i];
+            val2 += val1;
+        }
+        ans[ii] = {ind1, h * h - val2};
+    }
+    pair<int, int> gval = ans[0];
+    int gind;
+    sort(all(ans));
+    forn(i, n)
+    {
+        if (ans[i] == gval)
+        {
+            gind = n - i;
+        }
+    }
+    cout << gind << endl;
 }
 int32_t main()
 {

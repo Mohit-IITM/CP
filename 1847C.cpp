@@ -64,6 +64,38 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    vector<vector<int>> dp(n, vector<int>(256, 0));
+    int ma = 0, temp = 0;
+    forn(i, n)
+    {
+        cin >> a[i];
+    }
+    dp[0][a[0]] = 1;
+    forsn(i, 1, n)
+    {
+        dp[i][a[i]] = 1;
+        forn(j, 256)
+        {
+            if (dp[i - 1][j])
+            {
+                dp[i][j ^ a[i]] = 1;
+            }
+        }
+    }
+    forn(i, n)
+    {
+        forn(j, 256)
+        {
+            if (dp[i][j])
+            {
+                ma = max(ma, j);
+            }
+        }
+    }
+    cout << ma << endl;
 }
 int32_t main()
 {

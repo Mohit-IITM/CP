@@ -64,6 +64,25 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int b, c, h;
+    cin >> b >> c >> h;
+    int ans = 1;
+    b--;
+    while (b > 0 && c > 0)
+    {
+        c--;
+        ans++;
+        b--;
+        ans++;
+    }
+    while (b > 0 && h > 0)
+    {
+        h--;
+        ans++;
+        b--;
+        ans++;
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

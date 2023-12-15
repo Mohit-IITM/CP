@@ -64,6 +64,62 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    string s1, s2, s3;
+    cin >> s1 >> s2 >> s3;
+    char ans = '-';
+    if (s1[0] == s1[1] && s1[0] == s1[2])
+    {
+        if (s1[0] != '.')
+        {
+            ans = s1[0];
+        }
+    }
+    if (s3[0] == s3[1] && s3[0] == s3[2])
+    {
+        if (s3[0] != '.')
+        {
+            ans = s3[0];
+        }
+    }
+    if (s2[0] == s2[1] && s2[0] == s2[2])
+    {
+        if (s2[0] != '.')
+        {
+            ans = s2[0];
+        }
+    }
+    forn(i, 3)
+    {
+        if (s1[i] == s2[i] && s3[i] == s1[i])
+        {
+            if (s2[i] != '.')
+            {
+                ans = s2[i];
+            }
+        }
+    }
+    if (s1[0] == s2[1] && s2[1] == s3[2])
+    {
+        if (s2[1] != '.')
+        {
+            ans = s2[1];
+        }
+    }
+    if (s3[0] == s2[1] && s2[1] == s1[2])
+    {
+        if (s2[1] != '.')
+        {
+            ans = s2[1];
+        }
+    }
+    if (ans == '-')
+    {
+        cout << "DRAW" << endl;
+    }
+    else
+    {
+        cout << ans << endl;
+    }
 }
 int32_t main()
 {

@@ -64,6 +64,53 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> p(n);
+    string s;
+    cin >> s;
+    forn(i, n)
+    {
+        cin >> p[i];
+        p[i]--;
+    }
+    string s1 = s, s2 = s;
+    int ans = 1;
+    forn(i, n)
+    {
+        s1[i] = s[p[i]];
+    }
+    // cout << s1 << endl;
+    if (s1 == s)
+    {
+        cout << 1 << endl;
+        return;
+    }
+    while (true)
+    {
+        if (ans % 2 == 1)
+        {
+            forn(i, n)
+            {
+                s2[i] = s1[p[i]];
+            }
+            // cout << s2 << endl;
+        }
+        else
+        {
+            forn(i, n)
+            {
+                s1[i] = s2[p[i]];
+            }
+            // cout << s1 << endl;
+        }
+        ans++;
+        if (s1 == s || s2 == s)
+        {
+            break;
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

@@ -64,6 +64,25 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, s;
+    cin >> n >> s;
+    int ma = 0;
+    forn(i, n)
+    {
+        int x;
+        cin >> x;
+        s += x;
+        ma = max(ma, x);
+    }
+    for (int i = 100; i >= 0; i--)
+    {
+        if ((i * (i + 1)) / 2 == s && i >= ma)
+        {
+            ya;
+            return;
+        }
+    }
+    na;
 }
 int32_t main()
 {

@@ -64,6 +64,23 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    double n, d, h;
+    cin >> n >> d >> h;
+    vector<double> b(n);
+    double ans = n * d * h * 0.5;
+    forn(i, n)
+    {
+        cin >> b[i];
+    }
+    forn(i, n - 1)
+    {
+        double cb, ch, val = 0;
+        ch = max(val, b[i] + h - b[i + 1]);
+        cb = (ch * d) / h;
+        ans -= 0.5 * cb * ch;
+    }
+    cout << setprecision(10);
+    cout << ans << endl;
 }
 int32_t main()
 {

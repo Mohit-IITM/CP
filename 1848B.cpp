@@ -64,6 +64,46 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n), dif(k, -1), ma1(k, -1), ma2(k, -1);
+    forn(i, n)
+    {
+        cin >> a[i];
+        a[i]--;
+    }
+    forn(i, n)
+    {
+        if (i - dif[a[i]] - 1 >= ma1[a[i]])
+        {
+            ma2[a[i]] = ma1[a[i]];
+            ma1[a[i]] = i - dif[a[i]] - 1;
+        }
+        else if (i - dif[a[i]] - 1 > ma2[a[i]])
+        {
+            ma2[a[i]] = i - dif[a[i]] - 1;
+        }
+        dif[a[i]] = i;
+    }
+    forn(i, k)
+    {
+        if (n - dif[i] - 1 >= ma1[i])
+        {
+            ma2[i] = ma1[i];
+            ma1[i] = n - dif[i] - 1;
+        }
+        else if (n - dif[i] - 1 > ma2[i])
+        {
+            ma2[i] = n - dif[i] - 1;
+        }
+    }
+    int mi = LONG_LONG_MAX;
+    forn(i, k)
+    {
+        // cout << ma1[i] << " " << ma2[i] << endl;
+        mi = min(max(ma1[i] / 2, ma2[i]), mi);
+    }
+    cout << mi << endl;
 }
 int32_t main()
 {

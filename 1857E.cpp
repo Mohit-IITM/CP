@@ -61,9 +61,54 @@ vector<bool> sieve(int n)
 
 /* ************************************************************************************************************************************* */
 /* CODE BEGINS HERE */
+vector<int> calculate(vector<int> arr,
+                      int n)
+{
+    int sub = 0;
+    int sum = 0;
+    vector<int> ans;
+    for (int i = n - 1;
+         i >= 0; i--)
+        sum += arr[i];
+    for (int i = 0; i < n; i++)
+    {
+        sum -= arr[i];
+        ans.push_back(sub + (i * arr[i]) -
+                      ((n - i - 1) *
+                       arr[i]) +
+                      sum);
 
+        sub -= arr[i];
+    }
+    return ans;
+}
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<pair<int, int>> a(n);
+    forn(i, n)
+    {
+        cin >> a[i].first;
+        a[i].second = i;
+    }
+    sort(all(a));
+    vector<int> b(n);
+    forn(i, n)
+    {
+        b[i] = a[i].first;
+    }
+    vector<int> ans = calculate(b, n);
+    vector<int> fans(n);
+    forn(i, n)
+    {
+        fans[a[i].second] = ans[i];
+    }
+    forn(i, n)
+    {
+        cout << fans[i] + n << " ";
+    }
+    cout << endl;
 }
 int32_t main()
 {

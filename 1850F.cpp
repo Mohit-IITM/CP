@@ -64,6 +64,35 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    map<int, int> fre;
+    map<int, bool> mark;
+    map<int, int> val;
+    set<int> s;
+    forn(i, n)
+    {
+        int x;
+        cin >> x;
+        fre[x]++;
+        mark[x] = false;
+        s.insert(x);
+    }
+    for (auto x : s)
+    {
+        int temp = x;
+        while (temp <= n)
+        {
+            val[temp] += fre[x];
+            temp += x;
+        }
+    }
+    int ma = 0;
+    for (auto x : val)
+    {
+        ma = max(ma, x.second);
+    }
+    cout << ma << endl;
 }
 int32_t main()
 {

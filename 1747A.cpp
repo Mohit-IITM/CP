@@ -64,6 +64,16 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    int ans = 0;
+    forn(i, n)
+    {
+        int x;
+        cin >> x;
+        ans += x;
+    }
+    cout << abs(ans) << endl;
 }
 int32_t main()
 {

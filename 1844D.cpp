@@ -64,6 +64,31 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    int per = 1;
+    while (per <= n)
+    {
+        if (n % per != 0)
+        {
+            break;
+        }
+        per++;
+    }
+    string ans1 = "", ans = "";
+    forn(i, per)
+    {
+        ans1 += char(97 + i);
+    }
+    forn(i, n / per)
+    {
+        ans += ans1;
+    }
+    forn(i, n % per)
+    {
+        ans += ans1[i];
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

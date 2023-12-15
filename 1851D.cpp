@@ -64,6 +64,65 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n - 1), b(n - 1);
+    forn(i, n - 1)
+    {
+        cin >> a[i];
+    }
+    b[0] = a[0];
+    for (int i = 1; i < n - 1; i++)
+    {
+        b[i] = a[i] - a[i - 1];
+    }
+    map<int, int> mis;
+    forn(i, n - 1)
+    {
+        mis[b[i]]++;
+    }
+    vector<int> miss;
+    forn(i, n)
+    {
+        if (mis[i + 1] == 0)
+        {
+            miss.push_back(i + 1);
+        }
+    }
+    if (sz(miss) == 1)
+    {
+        ya;
+    }
+    else if (sz(miss) > 2)
+    {
+        na;
+    }
+    else
+    {
+        int val = miss[0] + miss[1];
+        if (val > n)
+        {
+            if (mis[val])
+            {
+                ya;
+            }
+            else
+            {
+                na;
+            }
+        }
+        else
+        {
+            if (mis[val] == 2)
+            {
+                ya;
+            }
+            else
+            {
+                na;
+            }
+        }
+    }
 }
 int32_t main()
 {

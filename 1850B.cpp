@@ -64,6 +64,24 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    int ma = 0;
+    int ans = 0;
+    forn(i, n)
+    {
+        int x, y;
+        cin >> x >> y;
+        if (x < 11)
+        {
+            if (y > ma)
+            {
+                ans = i + 1;
+                ma = y;
+            }
+        }
+    }
+    cout << ans << endl;
 }
 int32_t main()
 {

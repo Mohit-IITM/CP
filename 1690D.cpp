@@ -64,6 +64,30 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, k;
+    cin >> n >> k;
+    string s;
+    cin >> s;
+    vector<int> pref(n + 1, 0);
+    forn(i, n)
+    {
+        pref[i + 1] = pref[i];
+        if (s[i] == 'W')
+        {
+            pref[i + 1]++;
+        }
+    }
+    int mi = pref[n];
+    if (n == k)
+    {
+        cout << mi << endl;
+        return;
+    }
+    for (int i = 0; i <= n - k; i++)
+    {
+        mi = min(mi, pref[i + k] - pref[i]);
+    }
+    cout << mi << endl;
 }
 int32_t main()
 {

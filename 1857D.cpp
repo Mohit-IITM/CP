@@ -64,6 +64,39 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n), b(n);
+    forn(i, n)
+    {
+        cin >> a[i];
+    }
+    forn(i, n)
+    {
+        cin >> b[i];
+    }
+    vector<pair<int, int>> ans1;
+    forn(i, n)
+    {
+        ans1.push_back({a[i] - b[i], i});
+    }
+    sort(all(ans1));
+    vector<int> ans;
+    int ma = ans1.back().first;
+    for (auto x : ans1)
+    {
+        if (x.first == ma)
+        {
+            ans.push_back(x.second);
+        }
+    }
+    sort(all(ans));
+    cout << sz(ans) << endl;
+    for (auto x : ans)
+    {
+        cout << x + 1 << " ";
+    }
+    cout << endl;
 }
 int32_t main()
 {

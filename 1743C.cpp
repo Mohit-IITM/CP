@@ -64,6 +64,42 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    vector<int> a(n + 1);
+    int su = 0;
+    forn(i, n)
+    {
+        cin >> a[i];
+        su += a[i];
+    }
+    a[n] = LONG_LONG_MAX;
+    s += '0';
+    int mi = a[0], ans = 0;
+    bool c1 = false;
+    forn(i, n)
+    {
+        if (s[i] == '0')
+        {
+            c1 = true;
+            mi = a[i];
+        }
+        if (c1)
+        {
+            if (s[i + 1] == '1')
+            {
+                mi = min(mi, a[i + 1]);
+            }
+            else
+            {
+                ans += mi;
+                mi = a[i + 1];
+            }
+        }
+    }
+    cout << su - ans << endl;
 }
 int32_t main()
 {

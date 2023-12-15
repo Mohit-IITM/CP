@@ -39,23 +39,29 @@ void solv()
     forn(i, n / 2)
     {
         s1 += s[i];
-        s2 += s[i + n / 2];
+        s2 += s[n - 1 - i];
     }
-    string s3 = s2;
+    map<int, int> m1, m2;
     forn(i, n / 2)
     {
-        s3[i] = s2[n / 2 - 1 - i];
-    }
-    map<int, int> mp;
-    forn(i, n / 2)
-    {
-        if (s1[i] == s3[i])
+        m1[s1[i] - 'a']++;
+        m2[s2[i] - 'a']++;
+        if (s1[i] == s2[i])
         {
             ch++;
-            mp[s1[i]+0]++;
         }
     }
-    cout << ch << endl;
+    // cout << s1 << " " << s2 << endl;
+    int n1 = sz(s1);
+    for (auto x : s1)
+    {
+        if (m1[x - 'a'] + m2[x - 'a'] > n1)
+        {
+            cout << -1 << endl;
+            return;
+        }
+    }
+    cout << (ch + 1) / 2 << endl;
 }
 int32_t main()
 {

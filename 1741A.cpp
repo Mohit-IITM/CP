@@ -64,6 +64,61 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    string s1, s2;
+    cin >> s1 >> s2;
+    int sz1 = 0, sz2 = 0;
+    for (auto x : s1)
+    {
+        if (x == 'M')
+        {
+            sz1 = 0;
+        }
+        if (x == 'X')
+        {
+            sz1++;
+        }
+        if (x == 'S')
+        {
+            sz1++;
+            sz1 *= -1;
+        }
+        if (x == 'L')
+        {
+            sz1++;
+        }
+    }
+    for (auto x : s2)
+    {
+        if (x == 'M')
+        {
+            sz2 = 0;
+        }
+        if (x == 'X')
+        {
+            sz2++;
+        }
+        if (x == 'S')
+        {
+            sz2++;
+            sz2 *= -1;
+        }
+        if (x == 'L')
+        {
+            sz2++;
+        }
+    }
+    if (sz1 > sz2)
+    {
+        cout << ">" << endl;
+    }
+    else if (sz1 < sz2)
+    {
+        cout << "<" << endl;
+    }
+    else
+    {
+        cout << "=" << endl;
+    }
 }
 int32_t main()
 {

@@ -64,6 +64,66 @@ vector<bool> sieve(int n)
 
 void solv()
 {
+    int n, m;
+    cin >> n >> m;
+    vector<int> h(n);
+    forn(i, n)
+    {
+        cin >> h[i];
+    }
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> bfs;
+    vector<vector<pair<int, int>>> adj(n);
+    vector<bool> vis(n, false);
+    forn(i, m)
+    {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        int val = h[x] - h[y];
+        adj[x].push_back({val, y});
+        adj[y].push_back({-val, x});
+    }
+    vector<int> mins(n, 0);
+    bfs.push({0, 0});
+    vis[0] = true;
+    while (!bfs.empty())
+    {
+        int node = bfs.top().second;
+        int val1 = bfs.top().first;
+        mins[node] += val1;
+        bfs.pop();
+        for (auto x : adj[node])
+        {
+            if (!vis[x.second])
+            {
+                vis[x.second] = true;
+                bfs.push(x);
+            }
+        }
+    }
+    int q;
+    cin >> q;
+    forn(i, q)
+    {
+        int x, y, z;
+        cin >> x >> y >> z;
+        x--;
+        y--;
+        if (mins[x] - mins[y] > z)
+        {
+            na;
+        }
+        else
+        {
+            ya;
+        }
+    }
+    forn(i, n)
+    {
+        // cout << mins[i] << " ";
+    }
+    // cout << endl;
 }
 int32_t main()
 {
